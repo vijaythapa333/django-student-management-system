@@ -116,3 +116,10 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+#For Custom USER
+AUTH_USER_MODEL = "student_management_app.CustomUser"
+
+# Registering Custom Backend "EmailBackEnd"
+AUTHENTICATION_BACKENDS = ['student_management_app.EmailBackEnd.EmailBackEnd']
