@@ -14,4 +14,6 @@ urlpatterns = [
     path('add_staff/', HodViews.add_staff, name="add_staff"),
     path('add_staff_save/', HodViews.add_staff_save, name="add_staff_save"),
     path('manage_staff/', HodViews.manage_staff, name="manage_staff"),
+    path('add_course/', HodViews.add_course, name="add_course"),
+    path('add_course_save/', HodViews.add_course_save, name="add_course_save"),
 ]
