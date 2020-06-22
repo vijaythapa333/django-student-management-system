@@ -66,3 +66,47 @@ def add_course_save(request):
 
 def manage_course(request):
     pass
+
+
+
+def add_student(request):
+    courses = Courses.objects.all()
+    return render(request, 'hod_template/add_student_template.html', {"courses": courses})
+
+
+
+def add_student_save(request):
+    if request.method != "POST":
+        messages.error(request, "Invalid Method")
+        return redirect('add_student')
+    else:
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        address = request.POST.get('address')
+        session_start_year = request.POST.get('session_start_year')
+        session_end_year = request.POST.get('session_end_year')
+        course_id = request.POST.get('course')
+        gender = request.POST.get('gender')
+
+        try:
+            user = CustomUser.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name, user_type=3)
+            user.students.address = address
+            course_obj = Courses.objects.get(id=course_id)
+            user.students.course_id = course_obj
+            user.students.session_start_year = session_start_year
+            user.students.session_end_year = session_end_year
+            user.students.gender = gender
+            user.students.profile_pic = ""
+            user.save()
+            messages.success(request, "Student Added Successfully!")
+            return redirect('add_student')
+        except:
+            messages.error(request, "Failed to Add Student!")
+            return redirect('add_student')
+
+
+def manage_student(request):
+    pass
