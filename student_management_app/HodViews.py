@@ -122,8 +122,32 @@ def manage_course(request):
     return render(request, 'hod_template/manage_course_template.html', context)
 
 
-def edit_course(request):
-    pass
+def edit_course(request, course_id):
+    course = Courses.objects.get(id=course_id)
+    context = {
+        "course": course
+    }
+    return render(request, 'hod_template/edit_course_template.html', context)
+
+
+def edit_course_save(request):
+    if request.method != "POST":
+        HttpResponse("Invalid Method")
+    else:
+        course_id = request.POST.get('course_id')
+        course_name = request.POST.get('course')
+
+        try:
+            course = Courses.objects.get(id=course_id)
+            course.course_name = course_name
+            course.save()
+
+            messages.success(request, "Course Updated Successfully.")
+            return redirect('/edit_course/'+course_id)
+
+        except:
+            messages.error(request, "Failed to Update Course.")
+            return redirect('/edit_course/'+course_id)
 
 
 def delete_course(request):
@@ -251,8 +275,10 @@ def add_subject_save(request):
         return redirect('add_subject')
     else:
         subject_name = request.POST.get('subject')
+
         course_id = request.POST.get('course')
         course = Courses.objects.get(id=course_id)
+        
         staff_id = request.POST.get('staff')
         staff = CustomUser.objects.get(id=staff_id)
 
@@ -266,7 +292,6 @@ def add_subject_save(request):
             return redirect('add_subject')
 
 
-
 def manage_subject(request):
     subjects = Subjects.objects.all()
     context = {
@@ -275,8 +300,46 @@ def manage_subject(request):
     return render(request, 'hod_template/manage_subject_template.html', context)
 
 
-def edit_subject(request):
-    pass
+def edit_subject(request, subject_id):
+    subject = Subjects.objects.get(id=subject_id)
+    courses = Courses.objects.all()
+    staffs = CustomUser.objects.filter(user_type='2')
+    context = {
+        "subject": subject,
+        "courses": courses,
+        "staffs": staffs
+    }
+    return render(request, 'hod_template/edit_subject_template.html', context)
+
+
+def edit_subject_save(request):
+    if request.method != "POST":
+        HttpResponse("Invalid Method.")
+    else:
+        subject_id = request.POST.get('subject_id')
+        subject_name = request.POST.get('subject')
+        course_id = request.POST.get('course')
+        staff_id = request.POST.get('staff')
+
+        try:
+            subject = Subjects.objects.get(id=subject_id)
+            subject.subject_name = subject_name
+
+            course = Courses.objects.get(id=course_id)
+            subject.course_id = course
+
+            staff = CustomUser.objects.get(id=staff_id)
+            subject.staff_id = staff
+            
+            subject.save()
+
+            messages.success(request, "Subject Updated Successfully.")
+            return redirect('/edit_subject/'+subject_id)
+
+        except:
+            messages.error(request, "Failed to Update Subject.")
+            return redirect('/edit_subject/'+subject_id)
+
 
 
 def delete_subject(request):

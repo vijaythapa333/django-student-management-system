@@ -48,7 +48,7 @@
                                 <td>{{ course.created_at }}</td>
                                 <td>{{ course.updated_at }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-success">Edit</a> 
+                                    <a href="{% url 'edit_course' course.id %}" class="btn btn-success">Edit</a> 
                                     <a href="#" class="btn btn-danger">Delete</a>
                                 </td>
                                 </tr>
