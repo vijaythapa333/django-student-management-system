@@ -46,33 +46,34 @@
         <li class="nav-item">
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="index3.html" class="nav-link">Home</a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link">Contact</a>
-        </li>
       </ul>
 
-      <!-- SEARCH FORM -->
-      <form class="form-inline ml-3">
-        <div class="input-group input-group-sm">
-          <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-navbar" type="submit">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </div>
-      </form>
+      <h4 style="margin-left: 10px; margin-top: 5px;">Student Management System HOD Login</h4>
 
-      <!-- Right navbar links -->
-      {% include 'hod_template/notification_template.html' %}
+      <ul class="navbar-nav ml-auto">
+      
+      <!-- Notifications Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+          <i class="fas fa-cog"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
+          
+          
+          <div class="dropdown-divider"></div>
+          <a href="{% url 'logout_user' %}" class="dropdown-item">
+            <i class="fas fa-power-off mr-2"></i> Logout
+          </a>
+          <div class="dropdown-divider"></div>
+        </div>
+      </li>
+    </ul>
+
     </nav>
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    {% include 'hod_template/sidebar_template.html' %}
+    {% include 'hod_template/sidebar_template.html' with user=user %}
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -89,8 +90,7 @@
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Dashboard v1</li>
+                <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Home</a></li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->

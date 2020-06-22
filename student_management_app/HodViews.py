@@ -37,13 +37,60 @@ def add_staff_save(request):
 
 
 
-
 def manage_staff(request):
     staffs = Staffs.objects.all()
     context = {
         "staffs": staffs
     }
     return render(request, "hod_template/manage_staff_template.html", context)
+
+
+def edit_staff(request, staff_id):
+    staff = Staffs.objects.get(admin=staff_id)
+
+    context = {
+        "staff": staff
+    }
+    return render(request, "hod_template/edit_staff_template.html", context)
+
+
+def edit_staff_save(request):
+    if request.method != "POST":
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        staff_id = request.POST.get('staff_id')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        address = request.POST.get('address')
+
+        try:
+            # INSERTING into Customuser Model
+            user = CustomUser.objects.get(id=staff_id)
+            user.first_name = first_name
+            user.last_name = last_name
+            user.email = email
+            user.username = username
+            user.save()
+            
+            # INSERTING into Staff Model
+            staff_model = Staffs.objects.get(admin=staff_id)
+            staff_model.address = address
+            staff_model.save()
+
+            messages.success(request, "Staff Updated Successfully.")
+            return redirect('/edit_staff/'+staff_id)
+
+        except:
+            messages.error(request, "Failed to Update Staff.")
+            return redirect('/edit_staff/'+staff_id)
+
+
+
+def delete_staff(request):
+    pass
+
 
 
 
@@ -67,7 +114,6 @@ def add_course_save(request):
             return redirect('add_course')
 
 
-
 def manage_course(request):
     courses = Courses.objects.all()
     context = {
@@ -75,6 +121,13 @@ def manage_course(request):
     }
     return render(request, 'hod_template/manage_course_template.html', context)
 
+
+def edit_course(request):
+    pass
+
+
+def delete_course(request):
+    pass
 
 
 def add_student(request):
@@ -124,6 +177,13 @@ def manage_student(request):
     return render(request, 'hod_template/manage_student_template.html', context)
 
 
+def edit_student(request):
+    pass
+
+
+def delete_student(request):
+    pass
+
 
 def add_subject(request):
     courses = Courses.objects.all()
@@ -165,4 +225,11 @@ def manage_subject(request):
     }
     return render(request, 'hod_template/manage_subject_template.html', context)
 
+
+def edit_subject(request):
+    pass
+
+
+def delete_subject(request):
+    pass
 
