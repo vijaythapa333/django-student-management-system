@@ -23,10 +23,23 @@ def doLogin(request):
         user = EmailBackEnd.authenticate(request, username=request.POST.get('email'), password=request.POST.get('password'))
         if user != None:
             login(request, user)
+            user_type = user.user_type
             #return HttpResponse("Email: "+request.POST.get('email')+ " Password: "+request.POST.get('password'))
-            return redirect('admin_home')
+            if user_type == '1':
+                return redirect('admin_home')
+                
+            elif user_type == '2':
+                return HttpResponse("Staff Login")
+                #return redirect('admin_home')
+                
+            elif user_type == '3':
+                return HttpResponse("Student Login")
+                #return redirect('admin_home')
+            else:
+                messages.error(request, "Invalid Login!")
+                return redirect('admin_home')
         else:
-            messages.error(request, "Invalid Login")
+            messages.error(request, "Invalid Login Credentials!")
             #return HttpResponseRedirect("/")
             return redirect('login')
 
