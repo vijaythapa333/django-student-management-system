@@ -1,7 +1,7 @@
 {% extends 'hod_template/base_template.html' %}
 
 {% block page_title %}
-    Manage Staff
+    Manage Student
 {% endblock page_title %}
 
 {% block main_content %}
@@ -16,7 +16,7 @@
                     <!-- general form elements -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Staff Details</h3>
+                            <h3 class="card-title">Student Details</h3>
 
                             <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -39,22 +39,32 @@
                                 <th>Username</th>
                                 <th>Email</th>
                                 <th>Address</th>
+                                <th>Gender</th>
+                                <th>Profile Pic</th>
+                                <th>Start Year</th>
+                                <th>End Year</th>
+                                <th>Course</th>
                                 <th>Last Login</th>
                                 <th>Date Joined</th>
                                 <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for staff in staffs %}
+                                {% for student in students %}
                                 <tr>
-                                <td>{{ staff.admin.id }}</td>
-                                <td>{{ staff.admin.first_name }}</td>
-                                <td>{{ staff.admin.last_name }}</td>
-                                <td>{{ staff.admin.username }}</td>
-                                <td>{{ staff.admin.email }}</td>
-                                <td>{{ staff.address }}</td>
-                                <td>{{ staff.admin.last_login }}</td>
-                                <td>{{ staff.admin.date_joined }}</td>
+                                <td>{{ student.admin.id }}</td>
+                                <td>{{ student.admin.first_name }}</td>
+                                <td>{{ student.admin.last_name }}</td>
+                                <td>{{ student.admin.username }}</td>
+                                <td>{{ student.admin.email }}</td>
+                                <td>{{ student.address }}</td>
+                                <td>{{ student.gender }}</td>
+                                <td>{{ student.profile_pic }}</td>
+                                <td>{{ student.session_start_year }}</td>
+                                <td>{{ student.session_end_year }}</td>
+                                <td>{{ student.course_id.course_name }}</td>
+                                <td>{{ student.admin.last_login }}</td>
+                                <td>{{ student.admin.date_joined }}</td>
                                 <td>
                                     <a href="#" class="btn btn-success">Edit</a> 
                                     <a href="#" class="btn btn-danger">Delete</a>

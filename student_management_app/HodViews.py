@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 
-from student_management_app.models import CustomUser, Staffs, Courses, Subjects
+from student_management_app.models import CustomUser, Staffs, Courses, Subjects, Students
 
 
 def admin_home(request):
@@ -39,7 +39,11 @@ def add_staff_save(request):
 
 
 def manage_staff(request):
-    return render(request, "hod_template/manage_staff_template.html")
+    staffs = Staffs.objects.all()
+    context = {
+        "staffs": staffs
+    }
+    return render(request, "hod_template/manage_staff_template.html", context)
 
 
 
@@ -65,7 +69,11 @@ def add_course_save(request):
 
 
 def manage_course(request):
-    pass
+    courses = Courses.objects.all()
+    context = {
+        "courses": courses
+    }
+    return render(request, 'hod_template/manage_course_template.html', context)
 
 
 
@@ -109,7 +117,11 @@ def add_student_save(request):
 
 
 def manage_student(request):
-    pass
+    students = Students.objects.all()
+    context = {
+        "students": students
+    }
+    return render(request, 'hod_template/manage_student_template.html', context)
 
 
 
@@ -147,6 +159,10 @@ def add_subject_save(request):
 
 
 def manage_subject(request):
-    pass
+    subjects = Subjects.objects.all()
+    context = {
+        "subjects": subjects
+    }
+    return render(request, 'hod_template/manage_subject_template.html', context)
 
 
