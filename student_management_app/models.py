@@ -17,7 +17,7 @@ class AdminHOD(models.Model):
     id = models.AutoField(primary_key=True)
     admin = models.OneToOneField(CustomUser, on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()
 
 
@@ -26,7 +26,7 @@ class Staffs(models.Model):
     admin = models.OneToOneField(CustomUser, on_delete = models.CASCADE)
     address = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()
 
 
@@ -35,7 +35,7 @@ class Courses(models.Model):
     id = models.AutoField(primary_key=True)
     course_name = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()
 
     # def __str__(self):
@@ -49,7 +49,7 @@ class Subjects(models.Model):
     course_id = models.ForeignKey(Courses, on_delete=models.CASCADE, default=1) #need to give defauult course
     staff_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()
 
 
@@ -64,7 +64,7 @@ class Students(models.Model):
     session_start_year = models.DateField()
     session_end_year = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()
 
 
@@ -73,7 +73,7 @@ class Attendance(models.Model):
     subject_id = models.ForeignKey(Subjects, on_delete=models.DO_NOTHING)
     attendancce_date = models.DateTimeField(auto_now_add=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()
 
 
@@ -83,7 +83,7 @@ class AttendanceReport(models.Model):
     attendance_id = models.ForeignKey(Attendance, on_delete=models.CASCADE)
     status = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()
 
 
@@ -94,7 +94,7 @@ class LeaveReportStudent(models.Model):
     leave_message = models.TextField()
     leave_status = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()
 
 
@@ -105,7 +105,7 @@ class LeaveReportStaff(models.Model):
     leave_message = models.TextField()
     leave_status = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()
 
 
@@ -115,7 +115,7 @@ class FeedBackStudent(models.Model):
     feedback = models.TextField()
     feedback_reply = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()
 
 
@@ -125,7 +125,7 @@ class FeedBackStaffs(models.Model):
     feedback = models.TextField()
     feedback_reply = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()
 
 
@@ -135,7 +135,7 @@ class NotificationStudent(models.Model):
     student_id = models.ForeignKey(Students, on_delete=models.CASCADE)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()
 
 
@@ -144,7 +144,7 @@ class NotificationStaffs(models.Model):
     stafff_id = models.ForeignKey(Staffs, on_delete=models.CASCADE)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()
 
 
