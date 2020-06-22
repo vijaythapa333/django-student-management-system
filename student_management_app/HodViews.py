@@ -177,8 +177,57 @@ def manage_student(request):
     return render(request, 'hod_template/manage_student_template.html', context)
 
 
-def edit_student(request):
-    pass
+def edit_student(request, student_id):
+    student = Students.objects.get(admin=student_id)
+    courses = Courses.objects.all()
+    context = {
+        "student": student,
+        "courses": courses
+    }
+    return render(request, "hod_template/edit_student_template.html", context)
+
+
+def edit_student_save(request):
+    if request.method != "POST":
+        return HttpResponse("Invalid Method!")
+    else:
+        student_id = request.POST.get('student_id')
+        email = request.POST.get('email')
+        username = request.POST.get('username')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        address = request.POST.get('address')
+        course_id = request.POST.get('course')
+        gender = request.POST.get('gender')
+        session_start_year = request.POST.get('session_start_year')
+        session_end_year = request.POST.get('session_end_year')
+
+        try:
+            # First Update into Custom User Model
+            user = CustomUser.objects.get(id=student_id)
+            user.first_name = first_name
+            user.last_name = last_name
+            user.email = email
+            user.username = username
+            user.save()
+
+            # Then Update Students Table
+            student_model = Students.objects.get(admin=student_id)
+            student_model.address = address
+
+            course = Courses.objects.get(id=course_id)
+            student_model.course_id = course
+
+            student_model.gender = gender
+            student_model.session_start_year = session_start_year
+            student_model.session_end_year = session_end_year
+            student_model.save()
+
+            messages.success(request, "Student Updated Successfully!")
+            return redirect('/edit_student/'+student_id)
+        except:
+            messages.success(request, "Failed to Uupdate Student.")
+            return redirect('/edit_student/'+student_id)
 
 
 def delete_student(request):
