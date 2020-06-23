@@ -20,7 +20,7 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form role="form" method="POST" action="{% url 'edit_student_save' %}">
+                    <form role="form" method="POST" action="{% url 'edit_student_save' %}" enctype="multipart/form-data">
                         {% csrf_token %}
 
                         
@@ -102,6 +102,11 @@
                                 <label>Session End Year</label>
                                 <input type="date" class="form-control" name="session_end_year" value="{{ student.session_end_year|date:"Y-m-d" }}">
                                 <input type="hidden" name="student_id" value="{{ student.admin.id }}" />
+                            </div>
+
+                            <div class="form-group">
+                                <label>Upload Profile Picture</label>
+                                <input type="file" class="form-control" name="profile_pic">
                             </div>
 
 
