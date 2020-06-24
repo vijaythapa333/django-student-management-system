@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage #To upload Profile Picture
+from django.urls import reverse
 
 from student_management_app.models import CustomUser, Staffs, Courses, Subjects, Students
+from .forms import AddStudentForm, EditStudentForm
 
 
 def admin_home(request):
@@ -158,8 +160,11 @@ def delete_course(request):
 
 
 def add_student(request):
-    courses = Courses.objects.all()
-    return render(request, 'hod_template/add_student_template.html', {"courses": courses})
+    form = AddStudentForm()
+    context = {
+        "form": form
+    }
+    return render(request, 'hod_template/add_student_template.html', context)
 
 
 
@@ -168,43 +173,48 @@ def add_student_save(request):
         messages.error(request, "Invalid Method")
         return redirect('add_student')
     else:
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        address = request.POST.get('address')
-        session_start_year = request.POST.get('session_start_year')
-        session_end_year = request.POST.get('session_end_year')
-        course_id = request.POST.get('course')
-        gender = request.POST.get('gender')
+        form = AddStudentForm(request.POST, request.FILES)
 
-        # Getting Profile Pic first
-        # First Check whether the file is selected or not
-        # Upload only if file is selected
-        if len(request.FILES) != 0:
-            profile_pic = request.FILES['profile_pic']
-            fs = FileSystemStorage()
-            filename = fs.save(profile_pic.name, profile_pic)
-            profile_pic_url = fs.url(filename)
+        if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            address = form.cleaned_data['address']
+            session_start_year = form.cleaned_data['session_start_year']
+            session_end_year = form.cleaned_data['session_end_year']
+            course_id = form.cleaned_data['course_id']
+            gender = form.cleaned_data['gender']
+
+            # Getting Profile Pic first
+            # First Check whether the file is selected or not
+            # Upload only if file is selected
+            if len(request.FILES) != 0:
+                profile_pic = request.FILES['profile_pic']
+                fs = FileSystemStorage()
+                filename = fs.save(profile_pic.name, profile_pic)
+                profile_pic_url = fs.url(filename)
+            else:
+                profile_pic_url = None
+
+
+            try:
+                user = CustomUser.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name, user_type=3)
+                user.students.address = address
+                course_obj = Courses.objects.get(id=course_id)
+                user.students.course_id = course_obj
+                user.students.session_start_year = session_start_year
+                user.students.session_end_year = session_end_year
+                user.students.gender = gender
+                user.students.profile_pic = profile_pic_url
+                user.save()
+                messages.success(request, "Student Added Successfully!")
+                return redirect('add_student')
+            except:
+                messages.error(request, "Failed to Add Student!")
+                return redirect('add_student')
         else:
-            profile_pic_url = None
-
-
-        try:
-            user = CustomUser.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name, user_type=3)
-            user.students.address = address
-            course_obj = Courses.objects.get(id=course_id)
-            user.students.course_id = course_obj
-            user.students.session_start_year = session_start_year
-            user.students.session_end_year = session_end_year
-            user.students.gender = gender
-            user.students.profile_pic = profile_pic_url
-            user.save()
-            messages.success(request, "Student Added Successfully!")
-            return redirect('add_student')
-        except:
-            messages.error(request, "Failed to Add Student!")
             return redirect('add_student')
 
 
@@ -217,12 +227,26 @@ def manage_student(request):
 
 
 def edit_student(request, student_id):
+    # Adding Student ID into Session Variable
+    request.session['student_id'] = student_id
+
     student = Students.objects.get(admin=student_id)
-    courses = Courses.objects.all()
+    form = EditStudentForm()
+    # Filling the form with Data from Database
+    form.fields['email'].initial = student.admin.email
+    form.fields['username'].initial = student.admin.username
+    form.fields['first_name'].initial = student.admin.first_name
+    form.fields['last_name'].initial = student.admin.last_name
+    form.fields['address'].initial = student.address
+    form.fields['course_id'].initial = student.course_id.id
+    form.fields['gender'].initial = student.gender
+    form.fields['session_start_year'].initial = student.session_start_year
+    form.fields['session_end_year'].initial = student.session_end_year
+
     context = {
-        "student": student,
-        "courses": courses,
-        "id": student_id
+        "id": student_id,
+        "username": student.admin.username,
+        "form": form
     }
     return render(request, "hod_template/edit_student_template.html", context)
 
@@ -231,55 +255,64 @@ def edit_student_save(request):
     if request.method != "POST":
         return HttpResponse("Invalid Method!")
     else:
-        student_id = request.POST.get('student_id')
-        email = request.POST.get('email')
-        username = request.POST.get('username')
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        address = request.POST.get('address')
-        course_id = request.POST.get('course')
-        gender = request.POST.get('gender')
-        session_start_year = request.POST.get('session_start_year')
-        session_end_year = request.POST.get('session_end_year')
+        student_id = request.session.get('student_id')
+        if student_id == None:
+            return redirect('/manage_student')
 
-        # Getting Profile Pic first
-        # First Check whether the file is selected or not
-        # Upload only if file is selected
-        if len(request.FILES) != 0:
-            profile_pic = request.FILES['profile_pic']
-            fs = FileSystemStorage()
-            filename = fs.save(profile_pic.name, profile_pic)
-            profile_pic_url = fs.url(filename)
+        form = EditStudentForm(request.POST, request.FILES)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            username = form.cleaned_data['username']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            address = form.cleaned_data['address']
+            course_id = form.cleaned_data['course_id']
+            gender = form.cleaned_data['gender']
+            session_start_year = form.cleaned_data['session_start_year']
+            session_end_year = form.cleaned_data['session_end_year']
+
+            # Getting Profile Pic first
+            # First Check whether the file is selected or not
+            # Upload only if file is selected
+            if len(request.FILES) != 0:
+                profile_pic = request.FILES['profile_pic']
+                fs = FileSystemStorage()
+                filename = fs.save(profile_pic.name, profile_pic)
+                profile_pic_url = fs.url(filename)
+            else:
+                profile_pic_url = None
+
+            try:
+                # First Update into Custom User Model
+                user = CustomUser.objects.get(id=student_id)
+                user.first_name = first_name
+                user.last_name = last_name
+                user.email = email
+                user.username = username
+                user.save()
+
+                # Then Update Students Table
+                student_model = Students.objects.get(admin=student_id)
+                student_model.address = address
+
+                course = Courses.objects.get(id=course_id)
+                student_model.course_id = course
+
+                student_model.gender = gender
+                student_model.session_start_year = session_start_year
+                student_model.session_end_year = session_end_year
+                if profile_pic_url != None:
+                    student_model.profile_pic = profile_pic_url
+                student_model.save()
+                # Delete student_id SESSION after the data is updated
+                del request.session['student_id']
+
+                messages.success(request, "Student Updated Successfully!")
+                return redirect('/edit_student/'+student_id)
+            except:
+                messages.success(request, "Failed to Uupdate Student.")
+                return redirect('/edit_student/'+student_id)
         else:
-            profile_pic_url = None
-
-        try:
-            # First Update into Custom User Model
-            user = CustomUser.objects.get(id=student_id)
-            user.first_name = first_name
-            user.last_name = last_name
-            user.email = email
-            user.username = username
-            user.save()
-
-            # Then Update Students Table
-            student_model = Students.objects.get(admin=student_id)
-            student_model.address = address
-
-            course = Courses.objects.get(id=course_id)
-            student_model.course_id = course
-
-            student_model.gender = gender
-            student_model.session_start_year = session_start_year
-            student_model.session_end_year = session_end_year
-            if profile_pic_url != None:
-                student_model.profile_pic = profile_pic_url
-            student_model.save()
-
-            messages.success(request, "Student Updated Successfully!")
-            return redirect('/edit_student/'+student_id)
-        except:
-            messages.success(request, "Failed to Uupdate Student.")
             return redirect('/edit_student/'+student_id)
 
 
@@ -364,11 +397,13 @@ def edit_subject_save(request):
             subject.save()
 
             messages.success(request, "Subject Updated Successfully.")
-            return redirect('/edit_subject/'+subject_id)
+            # return redirect('/edit_subject/'+subject_id)
+            return HttpResponseRedirect(reverse("edit_subject", kwargs={"subject_id":subject_id}))
 
         except:
             messages.error(request, "Failed to Update Subject.")
-            return redirect('/edit_subject/'+subject_id)
+            return HttpResponseRedirect(reverse("edit_subject", kwargs={"subject_id":subject_id}))
+            # return redirect('/edit_subject/'+subject_id)
 
 
 

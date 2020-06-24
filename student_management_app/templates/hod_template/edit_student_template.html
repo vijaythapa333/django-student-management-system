@@ -1,7 +1,7 @@
 {% extends 'hod_template/base_template.html' %}
 
 {% block page_title %}
-    Edit Student | Username: {{ student.admin.username }} | #ID : {{ student.admin.id }}
+    Edit Student | Username: {{ username }} | #ID : {{ id }}
 {% endblock page_title %}
 
 {% block main_content %}
@@ -20,103 +20,10 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form role="form" method="POST" action="{% url 'edit_student_save' %}" enctype="multipart/form-data">
-                        {% csrf_token %}
+                    {% comment %} Displaying the Django Form using forms.py EditStudentForm {% endcomment %}
+                    {% url 'edit_student_save' as action_path %}
+                    {% include 'hod_template/form_template.html' with messages=messages form=form action_path=action_path button_text="Update Student" %}
 
-                        
-                                {% comment %} Display Messages {% endcomment %}
-                                {% if messages %}
-                                <div class="form-group">
-                                <div class="col-12">
-                                    {% for message in messages %}
-                                    {% if message.tags == "error" %}
-                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
-                                        {{ message }}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        </div>
-                                    {% elif message.tags == "success" %}
-                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
-                                        {{ message }}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        </div>
-                                    {% endif %}
-                                    {% endfor %}
-                                </div>
-                                </div>
-                                {% endif %}
-                            
-
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label>Email address</label>
-                                <input type="email" class="form-control" name="email" value="{{ student.admin.email }}">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Username</label>
-                                <input type="text" class="form-control" name="username" value="{{ student.admin.username }}">
-                            </div>
-
-                            <div class="form-group">
-                                <label>First Name</label>
-                                <input type="text" class="form-control" name="first_name" value="{{ student.admin.first_name }}">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Last Name</label>
-                                <input type="text" class="form-control" name="last_name" value="{{ student.admin.last_name }}">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Address</label>
-                                <textarea class="form-control" name="address">{{ student.address }}</textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Course </label>
-                                <select class="form-control" name="course">
-                                    {% for course in courses %}
-                                        <option value="{{ course.id }}" {% if course.id == student.course_id.id %} selected {% endif %}>{{ course.course_name }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Gender </label>
-                                <select class="form-control" name="gender">
-                                    <option value="Male" {% if student.gender == "Male" %} selected {% endif %}>Male</option>
-                                    <option value="Female" {% if student.gender == "Female" %} selected {% endif %}>Female</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Session Start Year</label>
-                                <input type="date" class="form-control" name="session_start_year" value="{{ student.session_start_year|date:"Y-m-d" }}">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Session End Year</label>
-                                <input type="date" class="form-control" name="session_end_year" value="{{ student.session_end_year|date:"Y-m-d" }}">
-                                <input type="hidden" name="student_id" value="{{ student.admin.id }}" />
-                            </div>
-
-                            <div class="form-group">
-                                <label>Upload Profile Picture</label>
-                                <input type="file" class="form-control" name="profile_pic">
-                            </div>
-
-
-                        </div>
-                        <!-- /.card-body -->
-
-                        <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Update Student</button>
-                        </div>
-                    </form>
                     </div>
                     <!-- /.card -->
 
