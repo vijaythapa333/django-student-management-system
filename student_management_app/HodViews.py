@@ -50,7 +50,8 @@ def edit_staff(request, staff_id):
     staff = Staffs.objects.get(admin=staff_id)
 
     context = {
-        "staff": staff
+        "staff": staff,
+        "id": staff_id
     }
     return render(request, "hod_template/edit_staff_template.html", context)
 
@@ -126,7 +127,8 @@ def manage_course(request):
 def edit_course(request, course_id):
     course = Courses.objects.get(id=course_id)
     context = {
-        "course": course
+        "course": course,
+        "id": course_id
     }
     return render(request, 'hod_template/edit_course_template.html', context)
 
@@ -219,7 +221,8 @@ def edit_student(request, student_id):
     courses = Courses.objects.all()
     context = {
         "student": student,
-        "courses": courses
+        "courses": courses,
+        "id": student_id
     }
     return render(request, "hod_template/edit_student_template.html", context)
 
@@ -333,7 +336,8 @@ def edit_subject(request, subject_id):
     context = {
         "subject": subject,
         "courses": courses,
-        "staffs": staffs
+        "staffs": staffs,
+        "id": subject_id
     }
     return render(request, 'hod_template/edit_subject_template.html', context)
 
