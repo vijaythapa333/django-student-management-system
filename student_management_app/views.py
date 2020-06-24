@@ -29,15 +29,15 @@ def doLogin(request):
                 return redirect('admin_home')
                 
             elif user_type == '2':
-                return HttpResponse("Staff Login")
-                #return redirect('admin_home')
+                # return HttpResponse("Staff Login")
+                return redirect('staff_home')
                 
             elif user_type == '3':
-                return HttpResponse("Student Login")
-                #return redirect('admin_home')
+                # return HttpResponse("Student Login")
+                return redirect('student_home')
             else:
                 messages.error(request, "Invalid Login!")
-                return redirect('admin_home')
+                return redirect('login')
         else:
             messages.error(request, "Invalid Login Credentials!")
             #return HttpResponseRedirect("/")

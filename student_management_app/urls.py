@@ -1,7 +1,7 @@
 
 from django.urls import path
 from . import views
-from .import HodViews
+from .import HodViews, StaffViews, StudentViews
 
 
 urlpatterns = [
@@ -30,4 +30,10 @@ urlpatterns = [
     path('manage_subject/', HodViews.manage_subject, name="manage_subject"),
     path('edit_subject/<subject_id>/', HodViews.edit_subject, name="edit_subject"),
     path('edit_subject_save/', HodViews.edit_subject_save, name="edit_subject_save"),
+
+    # URLS for Staff
+    path('staff_home/', StaffViews.staff_home, name="staff_home"),
+
+    # URSL for Student
+    path('student_home/', StudentViews.student_home, name="student_home"),
 ]
