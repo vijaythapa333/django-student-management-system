@@ -76,10 +76,12 @@ def save_attendance_data(request):
 
     # print(student_ids)
     try:
+        # First Attendance Data is Saved on Attendance Model
         attendance = Attendance(subject_id=subject_model, attendance_date=attendance_date, session_year_id=session_year_model)
         attendance.save()
 
         for stud in json_student:
+            # Attendance of Individual Student saved on AttendanceReport Model
             student = Students.objects.get(admin=stud['id'])
             attendance_report = AttendanceReport(student_id=student, attendance_id=attendance, status=stud['status'])
             attendance_report.save()
