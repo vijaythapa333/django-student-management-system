@@ -5,6 +5,11 @@ from django.dispatch import receiver
 
 
 
+class SessionYearModel(models.Model):
+    id = models.AutoField(primary_key=True)
+    session_start_year = models.DateField()
+    session_end_year = models.DateField()
+
 
 # Overriding the Default Django Auth User and adding One More Field (user_type)
 class CustomUser(AbstractUser):
@@ -61,8 +66,7 @@ class Students(models.Model):
     profile_pic = models.FileField()
     address = models.TextField()
     course_id = models.ForeignKey(Courses, on_delete=models.DO_NOTHING, default=1)
-    session_start_year = models.DateField()
-    session_end_year = models.DateField()
+    session_year_id = models.ForeignKey(SessionYearModel, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()
@@ -72,6 +76,7 @@ class Attendance(models.Model):
     id = models.AutoField(primary_key=True)
     subject_id = models.ForeignKey(Subjects, on_delete=models.DO_NOTHING)
     attendancce_date = models.DateTimeField(auto_now_add=True)
+    session_year_id = models.ForeignKey(SessionYearModel, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()

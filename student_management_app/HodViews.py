@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.core.files.storage import FileSystemStorage #To upload Profile Picture
 from django.urls import reverse
 
-from student_management_app.models import CustomUser, Staffs, Courses, Subjects, Students
+from student_management_app.models import CustomUser, Staffs, Courses, Subjects, Students, SessionYearModel
 from .forms import AddStudentForm, EditStudentForm
 
 
@@ -157,6 +157,67 @@ def edit_course_save(request):
 
 def delete_course(request):
     pass
+
+
+def manage_session(request):
+    session_years = SessionYearModel.objects.all()
+    context = {
+        "session_years": session_years
+    }
+    return render(request, "hod_template/manage_session_template.html", context)
+
+
+def add_session(request):
+    return render(request, "hod_template/add_session_template.html")
+
+
+def add_session_save(request):
+    if request.method != "POST":
+        messages.error(request, "Invalid Method")
+        return redirect('add_course')
+    else:
+        session_start_year = request.POST.get('session_start_year')
+        session_end_year = request.POST.get('session_end_year')
+
+        try:
+            sessionyear = SessionYearModel(session_start_year=session_start_year, session_end_year=session_end_year)
+            sessionyear.save()
+            messages.success(request, "Session Year added Successfully!")
+            return redirect("add_session")
+        except:
+            messages.error(request, "Failed to Add Session Year")
+            return redirect("add_session")
+
+
+def edit_session(request, session_id):
+    session_year = SessionYearModel.objects.get(id=session_id)
+    context = {
+        "session_year": session_year
+    }
+    return render(request, "hod_template/edit_session_template.html", context)
+
+
+def edit_session_save(request):
+    if request.method != "POST":
+        messages.error(request, "Invalid Method!")
+        return redirect('manage_session')
+    else:
+        session_id = request.POST.get('session_id')
+        session_start_year = request.POST.get('session_start_year')
+        session_end_year = request.POST.get('session_end_year')
+
+        try:
+            session_year = SessionYearModel.objects.get(id=session_id)
+            session_year.session_start_year = session_start_year
+            session_year.session_end_year = session_end_year
+            session_year.save()
+
+            messages.success(request, "Session Year Updated Successfully.")
+            return redirect('/edit_session/'+session_id)
+        except:
+            messages.error(request, "Failed to Update Session Year.")
+            return redirect('/edit_session/'+session_id)
+
 
 
 def add_student(request):

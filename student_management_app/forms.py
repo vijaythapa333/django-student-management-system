@@ -15,11 +15,14 @@ class AddStudentForm(forms.Form):
     username = forms.CharField(label="Username", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
     address = forms.CharField(label="Address", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
 
-    courses = Courses.objects.all()
-    course_list = []
-    for course in courses:
-        single_course = (course.id, course.course_name)
-        course_list.append(single_course)
+    try:
+        courses = Courses.objects.all()
+        course_list = []
+        for course in courses:
+            single_course = (course.id, course.course_name)
+            course_list.append(single_course)
+    except:
+        course_list = []
     
     gender_list = (
         ('Male','Male'),
@@ -28,8 +31,8 @@ class AddStudentForm(forms.Form):
     
     course_id = forms.ChoiceField(label="Course", choices=course_list, widget=forms.Select(attrs={"class":"form-control"}))
     gender = forms.ChoiceField(label="Gender", choices=gender_list, widget=forms.Select(attrs={"class":"form-control"}))
-    session_start_year = forms.DateField(label="Session Start", widget=DateInput(attrs={"class":"form-control"}))
-    session_end_year = forms.DateField(label="Session End", widget=DateInput(attrs={"class":"form-control"}))
+    # session_start_year = forms.DateField(label="Session Start", widget=DateInput(attrs={"class":"form-control"}))
+    # session_end_year = forms.DateField(label="Session End", widget=DateInput(attrs={"class":"form-control"}))
     profile_pic = forms.FileField(label="Profile Pic", required=False, widget=forms.FileInput(attrs={"class":"form-control"}))
 
 
@@ -41,11 +44,14 @@ class EditStudentForm(forms.Form):
     username = forms.CharField(label="Username", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
     address = forms.CharField(label="Address", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
 
-    courses = Courses.objects.all()
-    course_list = []
-    for course in courses:
-        single_course = (course.id, course.course_name)
-        course_list.append(single_course)
+    try:
+        courses = Courses.objects.all()
+        course_list = []
+        for course in courses:
+            single_course = (course.id, course.course_name)
+            course_list.append(single_course)
+    except:
+        course_list = []
     
     gender_list = (
         ('Male','Male'),
@@ -54,6 +60,6 @@ class EditStudentForm(forms.Form):
     
     course_id = forms.ChoiceField(label="Course", choices=course_list, widget=forms.Select(attrs={"class":"form-control"}))
     gender = forms.ChoiceField(label="Gender", choices=gender_list, widget=forms.Select(attrs={"class":"form-control"}))
-    session_start_year = forms.DateField(label="Session Start", widget=DateInput(attrs={"class":"form-control"}))
-    session_end_year = forms.DateField(label="Session End", widget=DateInput(attrs={"class":"form-control"}))
+    # session_start_year = forms.DateField(label="Session Start", widget=DateInput(attrs={"class":"form-control"}))
+    # session_end_year = forms.DateField(label="Session End", widget=DateInput(attrs={"class":"form-control"}))
     profile_pic = forms.FileField(label="Profile Pic", required=False, widget=forms.FileInput(attrs={"class":"form-control"}))

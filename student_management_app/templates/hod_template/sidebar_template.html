@@ -118,6 +118,31 @@
               </a>
             </li>
 
+
+            <li class="nav-item">
+              {% url 'manage_session' as manage_session %}
+              {% url 'edit_session' session_id=id as edit_session %}
+              <a href="{{ manage_session }}" class="nav-link {% if request.path == manage_session %} active {% endif %} {% if request.path == edit_session %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Manage Session
+                  <span class="right badge badge-danger">New</span>
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'add_session' as add_session %}
+              <a href="{{ add_session }}" class="nav-link {% if request.path == add_session %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Session
+                  <span class="right badge badge-danger">New</span>
+                </p>
+              </a>
+            </li>
+
+
             <li class="nav-item">
               <a href="{% url 'add_staff' %}" class="nav-link">
                 <i class="nav-icon fas fa-th"></i>

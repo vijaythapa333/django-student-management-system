@@ -1,0 +1,68 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    Manage Session
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Session Details</h3>
+
+                            <div class="card-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                                <div class="input-group-append">
+                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                <th>ID</th>
+                                <th>Session Start Year</th>
+                                <th>Session End Year</th>
+                                <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for session_year in session_years %}
+                                <tr>
+                                <td>{{ session_year.id }}</td>
+                                <td>{{ session_year.session_start_year }}</td>
+                                <td>{{ session_year.session_end_year }}</td>
+                                <td>
+                                    <a href="{% url 'edit_session' session_year.id %}" class="btn btn-success">Edit</a> 
+                                    <a href="#" class="btn btn-danger">Delete</a>
+                                </td>
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                        </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+  {% endblock main_content %}
