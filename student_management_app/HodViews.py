@@ -243,8 +243,7 @@ def add_student_save(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             address = form.cleaned_data['address']
-            session_start_year = form.cleaned_data['session_start_year']
-            session_end_year = form.cleaned_data['session_end_year']
+            session_year_id = form.cleaned_data['session_year_id']
             course_id = form.cleaned_data['course_id']
             gender = form.cleaned_data['gender']
 
@@ -263,10 +262,13 @@ def add_student_save(request):
             try:
                 user = CustomUser.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name, user_type=3)
                 user.students.address = address
+
                 course_obj = Courses.objects.get(id=course_id)
                 user.students.course_id = course_obj
-                user.students.session_start_year = session_start_year
-                user.students.session_end_year = session_end_year
+
+                session_year_obj = SessionYearModel.objects.get(id=session_year_id)
+                user.students.session_year_id = session_year_obj
+
                 user.students.gender = gender
                 user.students.profile_pic = profile_pic_url
                 user.save()
@@ -301,8 +303,7 @@ def edit_student(request, student_id):
     form.fields['address'].initial = student.address
     form.fields['course_id'].initial = student.course_id.id
     form.fields['gender'].initial = student.gender
-    form.fields['session_start_year'].initial = student.session_start_year
-    form.fields['session_end_year'].initial = student.session_end_year
+    form.fields['session_year_id'].initial = student.session_year_id.id
 
     context = {
         "id": student_id,
@@ -329,8 +330,7 @@ def edit_student_save(request):
             address = form.cleaned_data['address']
             course_id = form.cleaned_data['course_id']
             gender = form.cleaned_data['gender']
-            session_start_year = form.cleaned_data['session_start_year']
-            session_end_year = form.cleaned_data['session_end_year']
+            session_year_id = form.cleaned_data['session_year_id']
 
             # Getting Profile Pic first
             # First Check whether the file is selected or not
@@ -359,9 +359,10 @@ def edit_student_save(request):
                 course = Courses.objects.get(id=course_id)
                 student_model.course_id = course
 
+                session_year_obj = SessionYearModel.objects.get(id=session_year_id)
+                student_model.session_year_id = session_year_obj
+
                 student_model.gender = gender
-                student_model.session_start_year = session_start_year
-                student_model.session_end_year = session_end_year
                 if profile_pic_url != None:
                     student_model.profile_pic = profile_pic_url
                 student_model.save()
