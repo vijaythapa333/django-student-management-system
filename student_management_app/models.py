@@ -75,9 +75,10 @@ class Students(models.Model):
 
 
 class Attendance(models.Model):
+    # Subject Attendance
     id = models.AutoField(primary_key=True)
     subject_id = models.ForeignKey(Subjects, on_delete=models.DO_NOTHING)
-    attendancce_date = models.DateTimeField(auto_now_add=True)
+    attendance_date = models.DateTimeField(auto_now_add=True)
     session_year_id = models.ForeignKey(SessionYearModel, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -85,6 +86,7 @@ class Attendance(models.Model):
 
 
 class AttendanceReport(models.Model):
+    # Individual Student Attendance
     id = models.AutoField(primary_key=True)
     student_id = models.ForeignKey(Students, on_delete=models.DO_NOTHING)
     attendance_id = models.ForeignKey(Attendance, on_delete=models.CASCADE)
