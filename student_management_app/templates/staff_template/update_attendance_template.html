@@ -206,7 +206,7 @@
 
                 for(key in json_data)
                 {
-                    div_data+="<div class='col-lg-2'><div class='form-check'><input type='checkbox' ";
+                    div_data+="<div class='col-lg-3'><div class='form-check'><input type='checkbox' ";
 
                     if(json_data[key]['status'])
                     {
@@ -216,9 +216,19 @@
                     {
                         div_data+="";
                     }
-                    div_data+="name='student_data[]' value='"+ json_data[key]['id'] +"' />  <label class='form-check-label'>"+ json_data[key]['name']+" </label>";
+                    div_data+="name='student_data[]' value='"+ json_data[key]['id'] +"' />  <label class='form-check-label'>"+ json_data[key]['name']+" </label> ";
                     
                     // Displaying Present and Absent
+
+                    if(json_data[key]['status'])
+                    {
+                        div_data+="<b>[ Present ]</b>";
+                    }
+                    else
+                    {
+                        div_data+="<b>[ Absent ]</b>";
+                    }
+                    //Displaying Present and Absent Ends Here
                     
 
                     div_data+="</div></div> ";
