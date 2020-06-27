@@ -79,7 +79,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-primary">
+                    <div class="card card-success">
                         <div class="card-header">
                             <h3 class="card-title">Leave Apply History</h3>
                         </div>
@@ -87,13 +87,14 @@
                         <div class="card-body">
                            <div class="table-responsive">
                                 <table class="table">
+                                    <thead class="thead-light">
                                     <tr>
                                         <th>#ID</th>
                                         <th>Leave Date</th>
-                                        <th>Leve Message</th>
+                                        <th>Leave Message</th>
                                         <th>Status</th>
-                                        <th>Actions</th>
                                     </tr>
+                                    </thead>
                                     
                                     {% for leave in leave_data %}
                                     <tr>
@@ -109,17 +110,12 @@
                                                 <span class="alert alert-warning">Pending</span>
                                             {% endif %}
                                         </td>
-                                        <td>Actions</td>
                                     </tr>
                                     {% endfor %}
                                 </table>
                             </div>
                         </div>
                         <!-- /.card-body -->
-
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Apply for Leave</button>
-                        </div>
                     </div>
                 </div>
             </div>
