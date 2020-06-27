@@ -45,6 +45,9 @@ urlpatterns = [
     path('get_attendance_dates/', StaffViews.get_attendance_dates, name="get_attendance_dates"),
     path('get_attendance_student/', StaffViews.get_attendance_student, name="get_attendance_student"),
     path('update_attendance_data/', StaffViews.update_attendance_data, name="update_attendance_data"),
+    path('staff_apply_leave/', StaffViews.staff_apply_leave, name="staff_apply_leave"),
+    path('staff_apply_leave_save/', StaffViews.staff_apply_leave_save, name="staff_apply_leave_save"),
+    path('staff_feedback/', StaffViews.staff_feedback, name="staff_feedback"),
 
     # URSL for Student
     path('student_home/', StudentViews.student_home, name="student_home"),

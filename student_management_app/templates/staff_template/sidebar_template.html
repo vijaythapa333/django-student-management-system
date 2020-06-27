@@ -59,6 +59,28 @@
               </a>
             </li>
 
+            <li class="nav-item">
+              {% url 'staff_apply_leave' as staff_apply_leave %}
+              <a href="{{ staff_apply_leave }}" class="nav-link {% if request.path == staff_apply_leave %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Apply Leave
+                  {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'staff_feedback' as staff_feedback %}
+              <a href="{{ staff_feedback }}" class="nav-link {% if request.path == staff_feedback %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Staff Feedback
+                  {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                </p>
+              </a>
+            </li>
+
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
