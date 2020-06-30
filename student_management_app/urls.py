@@ -1,11 +1,12 @@
 
-from django.urls import path
+from django.urls import path, include
 from . import views
 from .import HodViews, StaffViews, StudentViews
 
 
 urlpatterns = [
     path('', views.loginPage, name="login"),
+    # path('accounts/', include('django.contrib.auth.urls')),
     path('doLogin/', views.doLogin, name="doLogin"),
     path('get_user_details/', views.get_user_details, name="get_user_details"),
     path('logout_user/', views.logout_user, name="logout_user"),
@@ -52,4 +53,6 @@ urlpatterns = [
 
     # URSL for Student
     path('student_home/', StudentViews.student_home, name="student_home"),
+    path('student_view_attendance/', StudentViews.student_view_attendance, name="student_view_attendance"),
+    path('student_view_attendance_post/', StudentViews.student_view_attendance_post, name="student_view_attendance_post"),
 ]

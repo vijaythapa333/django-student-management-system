@@ -36,6 +36,10 @@
             <button type="submit" class="btn btn-primary btn-block">Sign In</button>
           </div>
 
+          {% comment %} <div class="col-12 text-center">
+            <a href="{% url 'password_reset' %}">Reset Password</a>
+          </div>  {% endcomment %}
+
           {% comment %} Display Messages {% endcomment %}
           {% if messages %}
           <div class="col-12">

@@ -1,0 +1,98 @@
+{% extends 'student_template/base_template.html' %}
+
+
+{% block custom_css %}
+<style>
+.attendance_div_red{
+    padding: 10px;
+    padding-top: 20px;
+    background: #f44336;
+    border: 10px solid white;
+    text-align: center;
+    color: #fff;
+    border-radius: 30px;
+    box-shadow: 1px 1px 1px grey;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.attendance_div_green{
+    padding: 10px;
+    padding-top: 20px;
+    background: #4CAF50;
+    border: 10px solid white;
+    text-align: center;
+    color: #fff;
+    border-radius: 30px;
+    box-shadow: 1px 1px 1px grey;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+</style>
+{% endblock custom_css %}
+
+{% block page_title %}
+    View Attendance Data
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Attendance Data for {{ subject_obj.subject_name }}</h3>
+                    </div>
+                    <!-- /.card-header -->
+     
+                    <div class="card-body">
+                        <div class="row">
+                        
+                            {% for attendance_report in attendance_reports %}
+                                {% if attendance_report.status == True %}
+
+                                        <div class="col-lg-3 attendance_div_green">
+                                            <b>Date : {{ attendance_report.attendance_id.attendance_date }}</b> <br/>
+                                            
+                                                <b>[ Status : Present ]</b>
+                                            
+                                        </div>
+                                    
+
+                                {% else %}
+
+                                        <div class="col-lg-3 attendance_div_red">
+                                            <b>Date : {{ attendance_report.attendance_id.attendance_date }}</b> <br/>
+                                            
+                                                <b>[ Status : Absent ]</b>
+                                            
+                                        </div>
+
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        
+                    </div>
+
+                    </div>
+
+                    </form>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+  {% endblock main_content %}
+
+{% block custom_js %}
+
+{% endblock custom_js %}
