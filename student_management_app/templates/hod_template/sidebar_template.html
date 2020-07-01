@@ -154,21 +154,21 @@
             </li>
 
             <li class="nav-item">
-              <a href="{% url 'add_staff' %}" class="nav-link">
+              {% url 'student_feedback_message' as student_feedback_message %}
+              <a href="{{ student_feedback_message }}" class="nav-link {% if request.path == student_feedback_message %} active {% endif %}">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                   Student Feedback
-                  <span class="right badge badge-danger">New</span>
                 </p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a href="{% url 'add_staff' %}" class="nav-link">
+              {% url 'staff_feedback_message' as staff_feedback_message %}
+              <a href="{{ staff_feedback_message }}" class="nav-link {% if request.path == staff_feedback_message %} active {% endif %}">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
-                  Staff Feedback
-                  <span class="right badge badge-danger">New</span>
+                  Stafff Feedback
                 </p>
               </a>
             </li>
