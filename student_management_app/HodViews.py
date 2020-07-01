@@ -3,6 +3,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage #To upload Profile Picture
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+from django.core import serializers
+import json
 
 from student_management_app.models import CustomUser, Staffs, Courses, Subjects, Students, SessionYearModel
 from .forms import AddStudentForm, EditStudentForm
@@ -226,6 +229,7 @@ def add_student(request):
         "form": form
     }
     return render(request, 'hod_template/add_student_template.html', context)
+
 
 
 
@@ -473,5 +477,23 @@ def delete_subject(request):
     pass
 
 
+@csrf_exempt
+def check_email_exist(request):
+    email = request.POST.get("email")
+    user_obj = CustomUser.objects.filter(email=email).exists()
+    if user_obj:
+        return HttpResponse(True)
+    else:
+        return HttpResponse(False)
+
+
+@csrf_exempt
+def check_username_exist(request):
+    username = request.POST.get("username")
+    user_obj = CustomUser.objects.filter(username=username).exists()
+    if user_obj:
+        return HttpResponse(True)
+    else:
+        return HttpResponse(False)
 
 

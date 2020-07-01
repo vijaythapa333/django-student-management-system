@@ -53,12 +53,12 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Email address</label>
-                                <input type="email" class="form-control" name="email" placeholder="Enter email">
+                                <input type="email" class="form-control" name="email" placeholder="Enter email" id="id_email">
                             </div>
 
                             <div class="form-group">
                                 <label>Username</label>
-                                <input type="text" class="form-control" name="username" placeholder="Username">
+                                <input type="text" class="form-control" name="username" placeholder="Username" id="id_username">
                             </div>
 
                             <div class="form-group">
@@ -101,3 +101,77 @@
       </section>
 
   {% endblock main_content %}
+
+    {% block custom_js %}
+    {% comment %} Checking if email and username already exists or not usin Ajax {% endcomment %}
+
+    <script>
+        $(document).ready(function(){
+            // keyup event will be triggered when user leaves keyboard
+            $("#id_email").keyup(function(){
+                var email = $(this).val();
+
+                if(email!=""){
+                    $.ajax({
+                        url : '{% url 'check_email_exist' %}',
+                        type : 'POST',
+                        data : {email:email}
+                    })
+                    .done(function(response){
+                        //console.log(response);
+
+                        if(response == "True"){
+                            $(".email_error").remove();
+                            $("<span class='email_error' style='color: red; padding: 5px; font-weight: bold;'> Email Not Available. </span>").insertAfter("#id_email")
+                        }
+                        else{
+                            $(".email_error").remove();
+                            $("<span class='email_error' style='color: green; padding: 5px; font-weight: bold;'> Email Available. </span>").insertAfter("#id_email")
+                        }
+                    })
+
+                    .fail(function(){
+                        console.log("Failed");
+                    })
+                }
+                else{
+                    $(".email_error").remove();
+                }
+                
+            })
+
+            $("#id_username").keyup(function(){
+                var username = $(this).val();
+                
+                if(username!=""){
+                    $.ajax({
+                        url : '{% url 'check_username_exist' %}',
+                        type : 'POST',
+                        data : {username:username}
+                    })
+                    .done(function(response){
+                        //console.log(response);
+
+                        if(response == "True"){
+                            $(".username_error").remove();
+                            $("<span class='username_error' style='color: red; padding: 5px; font-weight: bold;'> Username Not Available. </span>").insertAfter("#id_username")
+                        }
+                        else{
+                            $(".username_error").remove();
+                            $("<span class='username_error' style='color: green; padding: 5px; font-weight: bold;'> Username Available. </span>").insertAfter("#id_username")
+                        }
+                    })
+
+                    .fail(function(){
+                        console.log("Failed");
+                    })
+                }
+                else{
+                    $(".username_error").remove();
+                }
+                
+            })
+        })
+    </script>
+
+  {% endblock custom_js %}

@@ -36,6 +36,8 @@ urlpatterns = [
     path('manage_subject/', HodViews.manage_subject, name="manage_subject"),
     path('edit_subject/<subject_id>/', HodViews.edit_subject, name="edit_subject"),
     path('edit_subject_save/', HodViews.edit_subject_save, name="edit_subject_save"),
+    path('check_email_exist/', HodViews.check_email_exist, name="check_email_exist"),
+    path('check_username_exist/', HodViews.check_username_exist, name="check_username_exist"),
 
     # URLS for Staff
     path('staff_home/', StaffViews.staff_home, name="staff_home"),
