@@ -174,11 +174,11 @@
             </li>
 
             <li class="nav-item">
-              <a href="{% url 'add_staff' %}" class="nav-link">
+              {% url 'student_leave_view' as student_leave_view %}
+              <a href="{{ student_leave_view }}" class="nav-link {% if request.path == student_leave_view %} active {% endif %}">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                   Student Leave
-                  <span class="right badge badge-danger">New</span>
                 </p>
               </a>
             </li>
