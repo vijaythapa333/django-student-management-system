@@ -48,6 +48,10 @@ urlpatterns = [
     path('staff_leave_view/', HodViews.staff_leave_view, name="staff_leave_view"),
     path('staff_leave_approve/<leave_id>/', HodViews.staff_leave_approve, name="staff_leave_approve"),
     path('staff_leave_reject/<leave_id>/', HodViews.staff_leave_reject, name="staff_leave_reject"),
+    path('admin_view_attendance/', HodViews.admin_view_attendance, name="admin_view_attendance"),
+    path('admin_get_attendance_dates/', HodViews.admin_get_attendance_dates, name="admin_get_attendance_dates"),
+    path('admin_get_attendance_student/', HodViews.admin_get_attendance_student, name="admin_get_attendance_student"),
+
 
     # URLS for Staff
     path('staff_home/', StaffViews.staff_home, name="staff_home"),

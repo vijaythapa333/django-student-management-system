@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage #To upload Profile Picture
 from django.urls import reverse
@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 import json
 
-from student_management_app.models import CustomUser, Staffs, Courses, Subjects, Students, SessionYearModel, FeedBackStudent, FeedBackStaffs, LeaveReportStudent, LeaveReportStaff
+from student_management_app.models import CustomUser, Staffs, Courses, Subjects, Students, SessionYearModel, FeedBackStudent, FeedBackStaffs, LeaveReportStudent, LeaveReportStaff, Attendance, AttendanceReport
 from .forms import AddStudentForm, EditStudentForm
 
 
@@ -587,4 +587,54 @@ def staff_leave_reject(request, leave_id):
     return redirect('staff_leave_view')
 
 
+def admin_view_attendance(request):
+    subjects = Subjects.objects.all()
+    session_years = SessionYearModel.objects.all()
+    context = {
+        "subjects": subjects,
+        "session_years": session_years
+    }
+    return render(request, "hod_template/admin_view_attendance.html", context)
+
+
+@csrf_exempt
+def admin_get_attendance_dates(request):
+    # Getting Values from Ajax POST 'Fetch Student'
+    subject_id = request.POST.get("subject")
+    session_year = request.POST.get("session_year_id")
+
+    # Students enroll to Course, Course has Subjects
+    # Getting all data from subject model based on subject_id
+    subject_model = Subjects.objects.get(id=subject_id)
+
+    session_model = SessionYearModel.objects.get(id=session_year)
+
+    # students = Students.objects.filter(course_id=subject_model.course_id, session_year_id=session_model)
+    attendance = Attendance.objects.filter(subject_id=subject_model, session_year_id=session_model)
+
+    # Only Passing Student Id and Student Name Only
+    list_data = []
+
+    for attendance_single in attendance:
+        data_small={"id":attendance_single.id, "attendance_date":str(attendance_single.attendance_date), "session_year_id":attendance_single.session_year_id.id}
+        list_data.append(data_small)
+
+    return JsonResponse(json.dumps(list_data), content_type="application/json", safe=False)
+
+
+@csrf_exempt
+def admin_get_attendance_student(request):
+    # Getting Values from Ajax POST 'Fetch Student'
+    attendance_date = request.POST.get('attendance_date')
+    attendance = Attendance.objects.get(id=attendance_date)
+
+    attendance_data = AttendanceReport.objects.filter(attendance_id=attendance)
+    # Only Passing Student Id and Student Name Only
+    list_data = []
+
+    for student in attendance_data:
+        data_small={"id":student.student_id.admin.id, "name":student.student_id.admin.first_name+" "+student.student_id.admin.last_name, "status":student.status}
+        list_data.append(data_small)
+
+    return JsonResponse(json.dumps(list_data), content_type="application/json", safe=False)
 

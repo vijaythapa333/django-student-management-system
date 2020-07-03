@@ -144,11 +144,11 @@
 
 
             <li class="nav-item">
-              <a href="{% url 'add_staff' %}" class="nav-link">
+              {% url 'admin_view_attendance' as admin_view_attendance %}
+              <a href="{{ admin_view_attendance }}" class="nav-link {% if request.path == admin_view_attendance %} active {% endif %}">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                   View Attendance
-                  <span class="right badge badge-danger">New</span>
                 </p>
               </a>
             </li>
