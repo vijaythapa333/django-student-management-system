@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 import json
 
-from student_management_app.models import CustomUser, Staffs, Courses, Subjects, Students, SessionYearModel, FeedBackStudent, FeedBackStaffs, LeaveReportStudent
+from student_management_app.models import CustomUser, Staffs, Courses, Subjects, Students, SessionYearModel, FeedBackStudent, FeedBackStaffs, LeaveReportStudent, LeaveReportStaff
 from .forms import AddStudentForm, EditStudentForm
 
 
@@ -566,10 +566,25 @@ def student_leave_reject(request, leave_id):
 
 
 def staff_leave_view(request):
+    leaves = LeaveReportStaff.objects.all()
     context = {
-
+        "leaves": leaves
     }
     return render(request, 'hod_template/staff_leave_view.html', context)
+
+
+def staff_leave_approve(request, leave_id):
+    leave = LeaveReportStaff.objects.get(id=leave_id)
+    leave.leave_status = 1
+    leave.save()
+    return redirect('staff_leave_view')
+
+
+def staff_leave_reject(request, leave_id):
+    leave = LeaveReportStaff.objects.get(id=leave_id)
+    leave.leave_status = 2
+    leave.save()
+    return redirect('staff_leave_view')
 
 
 
