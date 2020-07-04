@@ -122,9 +122,11 @@ def student_feedback_save(request):
 
 def student_profile(request):
     user = CustomUser.objects.get(id=request.user.id)
+    student = Students.objects.get(admin=user)
 
     context={
-        "user": user
+        "user": user,
+        "student": student
     }
     return render(request, 'student_template/student_profile.html', context)
 
@@ -137,6 +139,7 @@ def student_profile_update(request):
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         password = request.POST.get('password')
+        address = request.POST.get('address')
 
         try:
             customuser = CustomUser.objects.get(id=request.user.id)
@@ -145,6 +148,11 @@ def student_profile_update(request):
             if password != None and password != "":
                 customuser.set_password(password)
             customuser.save()
+
+            student = Students.objects.get(admin=customuser.id)
+            student.address = address
+            student.save()
+            
             messages.success(request, "Profile Updated Successfully")
             return redirect('student_profile')
         except:

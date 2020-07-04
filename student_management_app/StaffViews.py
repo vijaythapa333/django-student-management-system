@@ -223,9 +223,11 @@ def update_attendance_data(request):
 
 def staff_profile(request):
     user = CustomUser.objects.get(id=request.user.id)
+    staff = Staffs.objects.get(admin=user)
 
     context={
-        "user": user
+        "user": user,
+        "staff": staff
     }
     return render(request, 'staff_template/staff_profile.html', context)
 
@@ -238,6 +240,7 @@ def staff_profile_update(request):
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         password = request.POST.get('password')
+        address = request.POST.get('address')
 
         try:
             customuser = CustomUser.objects.get(id=request.user.id)
@@ -246,6 +249,11 @@ def staff_profile_update(request):
             if password != None and password != "":
                 customuser.set_password(password)
             customuser.save()
+
+            staff = Staffs.objects.get(admin=customuser.id)
+            staff.address = address
+            staff.save()
+
             messages.success(request, "Profile Updated Successfully")
             return redirect('staff_profile')
         except:

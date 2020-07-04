@@ -1,4 +1,4 @@
-{% extends 'hod_template/base_template.html' %}
+{% extends 'staff_template/base_template.html' %}
 
 {% block page_title %}
     Update Profile
@@ -69,6 +69,11 @@
                             <div class="form-group">
                                 <label>Last Name </label>
                                 <input type="text" class="form-control" name="last_name" value="{{ user.last_name }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Address </label>
+                                <textarea name="address" class="form-control" row="5">{{ staff.address }}</textarea>
                             </div>
 
                             <div class="form-group">
