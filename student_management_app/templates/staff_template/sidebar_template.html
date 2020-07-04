@@ -16,7 +16,7 @@
             <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="{% url 'staff_profile' %}" class="d-block">{{ user.username }}</a>
+            <a href="{% url 'staff_profile' %}" class="d-block">{{ user.first_name }} {{ user.last_name }}</a>
           </div>
         </div>
 
@@ -29,7 +29,7 @@
             <li class="nav-item">
               {% url 'staff_home' as staff_home %}
               <a href="{{ staff_home }}" class="nav-link {% if request.path == staff_home %} active {% endif %}">
-                <i class="nav-icon fas fa-th"></i>
+                <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                   Home
                   {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
@@ -40,7 +40,7 @@
             <li class="nav-item">
               {% url 'staff_take_attendance' as staff_take_attendance %}
               <a href="{{ staff_take_attendance }}" class="nav-link {% if request.path == staff_take_attendance %} active {% endif %}">
-                <i class="nav-icon fas fa-th"></i>
+                <i class="nav-icon fas fa-calendar-plus"></i>
                 <p>
                   Take Attendance
                   {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
@@ -51,7 +51,7 @@
             <li class="nav-item">
               {% url 'staff_update_attendance' as staff_update_attendance %}
               <a href="{{ staff_update_attendance }}" class="nav-link {% if request.path == staff_update_attendance %} active {% endif %}">
-                <i class="nav-icon fas fa-th"></i>
+                <i class="nav-icon fas fa-calendar-alt"></i>
                 <p>
                   View Update Attendance
                   {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
@@ -62,7 +62,7 @@
             <li class="nav-item">
               {% url 'staff_apply_leave' as staff_apply_leave %}
               <a href="{{ staff_apply_leave }}" class="nav-link {% if request.path == staff_apply_leave %} active {% endif %}">
-                <i class="nav-icon fas fa-th"></i>
+                <i class="nav-icon fas fa-envelope-open-text"></i>
                 <p>
                   Apply Leave
                   {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
@@ -73,7 +73,7 @@
             <li class="nav-item">
               {% url 'staff_feedback' as staff_feedback %}
               <a href="{{ staff_feedback }}" class="nav-link {% if request.path == staff_feedback %} active {% endif %}">
-                <i class="nav-icon fas fa-th"></i>
+                <i class="nav-icon fas fa-comments"></i>
                 <p>
                   Feedback
                   {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
