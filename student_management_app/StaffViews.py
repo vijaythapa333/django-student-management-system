@@ -220,3 +220,35 @@ def update_attendance_data(request):
     except:
         return HttpResponse("Error")
 
+
+def staff_profile(request):
+    user = CustomUser.objects.get(id=request.user.id)
+
+    context={
+        "user": user
+    }
+    return render(request, 'staff_template/staff_profile.html', context)
+
+
+def staff_profile_update(request):
+    if request.method != "POST":
+        messages.error(request, "Invalid Method!")
+        return redirect('staff_profile')
+    else:
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        password = request.POST.get('password')
+
+        try:
+            customuser = CustomUser.objects.get(id=request.user.id)
+            customuser.first_name = first_name
+            customuser.last_name = last_name
+            if password != None and password != "":
+                customuser.set_password(password)
+            customuser.save()
+            messages.success(request, "Profile Updated Successfully")
+            return redirect('staff_profile')
+        except:
+            messages.error(request, "Failed to Update Profile")
+            return redirect('staff_profile')
+
