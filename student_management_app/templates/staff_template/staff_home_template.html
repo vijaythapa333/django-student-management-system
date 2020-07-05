@@ -11,8 +11,273 @@
 <section class="content">
         <div class="container-fluid">
 
+            {% comment %} Boxes Section Starts {% endcomment %}
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>{{ students_count }}</h3>
+
+                        <p>Students Under Me</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="{% url 'staff_take_attendance' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>{{ attendance_count }}</h3>
+
+                        <p>Total Attendance Taken</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="{% url 'staff_take_attendance' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>{{ leave_count }}</h3>
+
+                        <p>Total Leave Taken</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="{% url 'staff_apply_leave' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>{{ subject_count }}</h3>
+
+                        <p>Total Subjects</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                </div>
+            {% comment %} Boxes Section Ends {% endcomment %}
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <!-- PIE CHART -->
+                    <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title">Leave Status Chart</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+
+                <div class="col-lg-6">
+                    <!-- BAR CHART -->
+                    <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">Subjects Attend Chart</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart">
+                        <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- BAR CHART -->
+                    <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Student Attendance Data</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart">
+                        <canvas id="barChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
 
         </div><!-- /.container-fluid -->
       </section>
 
   {% endblock main_content %}
+
+  {% block custom_js %}
+    <script>
+       $(document).ready(function(){
+           //Code for Pie Chart
+            var pieData        = {
+            labels: [
+                'Leave', 
+                'Attendance', 
+            ],
+            datasets: [
+                {
+                data: [{{ leave_count }}, {{ attendance_count }}],
+                backgroundColor : ['#f56954', '#00a65a'],
+                }
+            ]
+            }
+           //Code for Pie Chart
+            var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+            var pieData        = pieData;
+            var pieOptions     = {
+            maintainAspectRatio : false,
+            responsive : true,
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            var pieChart = new Chart(pieChartCanvas, {
+            type: 'pie',
+            data: pieData,
+            options: pieOptions      
+            })
+
+            //Code for Bar Chart
+            /*
+            var subjects = {{ subject_name|safe }}
+            var data_present = {{ data_present }}
+            var data_absent = {{ data_absent }}
+            */
+            var attendance_list = {{ attendance_list }}
+            var subject_list = {{ subject_list|safe }}
+
+            //Dataset for Bar Chart
+            
+            var areaChartData = {
+            labels  : subject_list,
+            datasets: [
+                {
+                label               : 'Subject Attend Chart',
+                backgroundColor     : 'rgba(60,141,188,0.9)',
+                borderColor         : 'rgba(60,141,188,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(60,141,188,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(60,141,188,1)',
+                data                : attendance_list
+                },
+            ]
+            }
+
+
+            var barChartCanvas = $('#barChart').get(0).getContext('2d')
+            var barChartData = jQuery.extend(true, {}, areaChartData)
+            var temp1 = areaChartData.datasets[0]
+            barChartData.datasets[0] = temp1
+
+            var barChartOptions = {
+            responsive              : true,
+            maintainAspectRatio     : false,
+            datasetFill             : false
+            }
+
+            var barChart = new Chart(barChartCanvas, {
+            type: 'bar', 
+            data: barChartData,
+            options: barChartOptions
+            })
+
+
+            //Code for Stuent Attendnace by Subjects Bar Chart
+            var student_list = {{ student_list|safe }};
+            var attendance_present_list = {{ attendance_present_list }}
+            var attendance_absent_list = {{ attendance_absent_list }}
+
+            var areaChartData2 = {
+            labels  : student_list,
+            datasets: [
+                {
+                label               : 'Student Attendance Chart for Present',
+                backgroundColor     : 'rgba(60,141,188,0.9)',
+                borderColor         : 'rgba(60,141,188,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(60,141,188,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(60,141,188,1)',
+                data                : attendance_present_list
+                },
+                {
+                label               : 'Student Attendance Chart for Absent',
+                backgroundColor     : 'rgba(210, 214, 222, 1)',
+                borderColor         : 'rgba(210, 214, 222, 1)',
+                pointRadius         : false,
+                pointColor          : 'rgba(210, 214, 222, 1)',
+                pointStrokeColor    : '#c1c7d1',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(220,220,220,1)',
+                data                : attendance_absent_list
+                },
+            ]
+            }
+
+
+            var barChartCanvas2 = $('#barChart2').get(0).getContext('2d')
+            var barChartData2 = jQuery.extend(true, {}, areaChartData2)
+            var temp2 = areaChartData2.datasets[0]
+            barChartData2.datasets[0] = temp2
+
+            var barChartOptions2 = {
+            responsive              : true,
+            maintainAspectRatio     : false,
+            datasetFill             : false
+            }
+
+            var barChart2 = new Chart(barChartCanvas2, {
+            type: 'bar', 
+            data: barChartData2,
+            options: barChartOptions2
+            })
+
+       })
+    </script>
+  {% endblock custom_js %}
