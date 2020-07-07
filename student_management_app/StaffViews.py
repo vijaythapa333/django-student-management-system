@@ -8,7 +8,7 @@ from django.core import serializers
 import json
 
 
-from student_management_app.models import CustomUser, Staffs, Courses, Subjects, Students, SessionYearModel, Attendance, AttendanceReport, LeaveReportStaff, FeedBackStaffs
+from student_management_app.models import CustomUser, Staffs, Courses, Subjects, Students, SessionYearModel, Attendance, AttendanceReport, LeaveReportStaff, FeedBackStaffs, StudentResult
 
 
 def staff_home(request):
@@ -310,3 +310,46 @@ def staff_profile_update(request):
             messages.error(request, "Failed to Update Profile")
             return redirect('staff_profile')
 
+
+
+def staff_add_result(request):
+    subjects = Subjects.objects.filter(staff_id=request.user.id)
+    session_years = SessionYearModel.objects.all()
+    context = {
+        "subjects": subjects,
+        "session_years": session_years,
+    }
+    return render(request, "staff_template/add_result_template.html", context)
+
+
+def staff_add_result_save(request):
+    if request.method != "POST":
+        messages.error(request, "Invalid Method")
+        return redirect('staff_add_result')
+    else:
+        student_admin_id = request.POST.get('student_list')
+        assignment_marks = request.POST.get('assignment_marks')
+        exam_marks = request.POST.get('exam_marks')
+        subject_id = request.POST.get('subject')
+
+        student_obj = Students.objects.get(admin=student_admin_id)
+        subject_obj = Subjects.objects.get(id=subject_id)
+
+        try:
+            # Check if Students Result Already Exists or not
+            check_exist = StudentResult.objects.filter(subject_id=subject_obj, student_id=student_obj).exists()
+            if check_exist:
+                result = StudentResult.objects.get(subject_id=subject_obj, student_id=student_obj)
+                result.subject_assignment_marks = assignment_marks
+                result.subject_exam_marks = exam_marks
+                result.save()
+                messages.success(request, "Result Updated Successfully!")
+                return redirect('staff_add_result')
+            else:
+                result = StudentResult(student_id=student_obj, subject_id=subject_obj, subject_exam_marks=exam_marks, subject_assignment_marks=assignment_marks)
+                result.save()
+                messages.success(request, "Result Added Successfully!")
+                return redirect('staff_add_result')
+        except:
+            messages.error(request, "Failed to Add Result!")
+            return redirect('staff_add_result')

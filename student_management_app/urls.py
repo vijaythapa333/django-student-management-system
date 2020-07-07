@@ -53,6 +53,7 @@ urlpatterns = [
     path('admin_get_attendance_student/', HodViews.admin_get_attendance_student, name="admin_get_attendance_student"),
     path('admin_profile/', HodViews.admin_profile, name="admin_profile"),
     path('admin_profile_update/', HodViews.admin_profile_update, name="admin_profile_update"),
+    
 
 
     # URLS for Staff
@@ -70,6 +71,8 @@ urlpatterns = [
     path('staff_feedback_save/', StaffViews.staff_feedback_save, name="staff_feedback_save"),
     path('staff_profile/', StaffViews.staff_profile, name="staff_profile"),
     path('staff_profile_update/', StaffViews.staff_profile_update, name="staff_profile_update"),
+    path('staff_add_result/', StaffViews.staff_add_result, name="staff_add_result"),
+    path('staff_add_result_save/', StaffViews.staff_add_result_save, name="staff_add_result_save"),
 
     # URSL for Student
     path('student_home/', StudentViews.student_home, name="student_home"),
