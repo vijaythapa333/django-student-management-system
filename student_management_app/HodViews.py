@@ -168,8 +168,15 @@ def edit_staff_save(request):
 
 
 
-def delete_staff(request):
-    pass
+def delete_staff(request, staff_id):
+    staff = Staffs.objects.get(admin=staff_id)
+    try:
+        staff.delete()
+        messages.success(request, "Staff Deleted Successfully.")
+        return redirect('manage_staff')
+    except:
+        messages.error(request, "Failed to Delete Staff.")
+        return redirect('manage_staff')
 
 
 
@@ -231,8 +238,15 @@ def edit_course_save(request):
             return redirect('/edit_course/'+course_id)
 
 
-def delete_course(request):
-    pass
+def delete_course(request, course_id):
+    course = Courses.objects.get(id=course_id)
+    try:
+        course.delete()
+        messages.success(request, "Course Deleted Successfully.")
+        return redirect('manage_course')
+    except:
+        messages.error(request, "Failed to Delete Course.")
+        return redirect('manage_course')
 
 
 def manage_session(request):
@@ -294,6 +308,16 @@ def edit_session_save(request):
             messages.error(request, "Failed to Update Session Year.")
             return redirect('/edit_session/'+session_id)
 
+
+def delete_session(request, session_id):
+    session = SessionYearModel.objects.get(id=session_id)
+    try:
+        session.delete()
+        messages.success(request, "Session Deleted Successfully.")
+        return redirect('manage_session')
+    except:
+        messages.error(request, "Failed to Delete Session.")
+        return redirect('manage_session')
 
 
 def add_student(request):
@@ -455,8 +479,15 @@ def edit_student_save(request):
             return redirect('/edit_student/'+student_id)
 
 
-def delete_student(request):
-    pass
+def delete_student(request, student_id):
+    student = Students.objects.get(admin=student_id)
+    try:
+        student.delete()
+        messages.success(request, "Student Deleted Successfully.")
+        return redirect('manage_student')
+    except:
+        messages.error(request, "Failed to Delete Student.")
+        return redirect('manage_student')
 
 
 def add_subject(request):
@@ -546,8 +577,15 @@ def edit_subject_save(request):
 
 
 
-def delete_subject(request):
-    pass
+def delete_subject(request, subject_id):
+    subject = Subjects.objects.get(id=subject_id)
+    try:
+        subject.delete()
+        messages.success(request, "Subject Deleted Successfully.")
+        return redirect('manage_subject')
+    except:
+        messages.error(request, "Failed to Delete Subject.")
+        return redirect('manage_subject')
 
 
 @csrf_exempt
