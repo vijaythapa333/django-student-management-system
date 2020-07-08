@@ -14,7 +14,7 @@ And if you like this project then ADD a STAR ⭐️  to this project 👆
 5. Manage Subjects (Add, Update and Delete)
 6. Manage Sessions (Add, Update and Delete)
 7. View Student Attendance
-8. Review and Reply Stuudent/Staff Feedback
+8. Review and Reply Student/Staff Feedback
 9. Review (Approve/Reject) Student/Staff Leave
 
 ### B. Staff/Teachers Can
