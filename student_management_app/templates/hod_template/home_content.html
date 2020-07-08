@@ -12,7 +12,7 @@
               <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h3>{{ student_count }}</h3>
+                  <h3>{{ all_student_count }}</h3>
 
                   <p>Total Students</p>
                 </div>
@@ -233,7 +233,7 @@
         ],
         datasets: [
           {
-            data: [{{ student_count }}, {{ staff_count }}],
+            data: [{{ all_student_count }}, {{ staff_count }}],
             backgroundColor : ['#f56954', '#00a65a'],
           }
         ]
