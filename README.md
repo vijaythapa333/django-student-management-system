@@ -53,6 +53,11 @@ $  source venv/bin/activate
 $  git clone https://github.com/vijaythapa333/django-student-management-system.git
 ```
 
+Then, Enter the project
+```
+$  cd django-student-management-system
+```
+
 **4. Install Requirements from 'requirements.txt'**
 ```python
 $  pip install -r requirements.txt
