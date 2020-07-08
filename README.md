@@ -87,5 +87,5 @@ $ python3 manage.py runserver
 
 ## For Sponsor or Projects Enquiry
 1. Email - hi@vijaythapa.com
-2. LinkedIn - [I'm an inline-style link with title](https:linkedin.com/in/vijaythapa "Vijay Thapa on LinkedIn")
+2. [Vijay Thapa - LinkeIn](https:linkedin.com/in/vijaythapa "Vijay Thapa on LinkedIn")
 
