@@ -7,10 +7,13 @@ And if you like this project then ADD a STAR ⭐️  to this project 👆
 ## How to Install and Run this project?
 
 ### Pre-Requisites:
-1. Install Python Latest Version
+1. Install Git Version Control
+[ https://github.com/vijaythapa333/anystore ]
+
+2. Install Python Latest Version
 [ https://www.python.org/downloads/ ]
 
-2. Install Pip (Package Manager)
+3. Install Pip (Package Manager)
 [ https://pip.pypa.io/en/stable/installing/ ]
 
 *Alternative to Pip is Homebrew*
