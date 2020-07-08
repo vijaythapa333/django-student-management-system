@@ -122,7 +122,7 @@ Command for Mac:
 $ python3 manage.py runserver
 ```
 
-**7. Login Credentials
+**7. Login Credentials**
 
 Create Super User (HOD)
 ```
@@ -131,6 +131,7 @@ $  python manage.py createsuperuser
 Then Add Emmail, Username and Password
 
 **or Use Default Credentials**
+
 *For HOD /SuperAdmin*
 Email: admin@gmail.com
 Password: admin
