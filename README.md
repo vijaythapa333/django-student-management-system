@@ -8,7 +8,7 @@ And if you like this project then ADD a STAR ⭐️  to this project 👆
 
 ### Pre-Requisites:
 1. Install Git Version Control
-[ https://github.com/vijaythapa333/anystore ]
+[ https://git-scm.com/ ]
 
 2. Install Python Latest Version
 [ https://www.python.org/downloads/ ]
