@@ -136,7 +136,7 @@ Create Super User (HOD)
 ```
 $  python manage.py createsuperuser
 ```
-Then Add Emmail, Username and Password
+Then Add Email, Username and Password
 
 **or Use Default Credentials**
 
