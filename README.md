@@ -41,9 +41,11 @@ And if you like this project then ADD a STAR ⭐️  to this project 👆
 
 ## Donate
 
-**Donate by wire transfer:** contact *donate@vijaythapa.com* for wire transfer details. 
+**[PayPal](https://bit.ly/support-vijay-thapa)**
 
+**[Buy me a Coffee  ☕️](https://www.buymeacoffee.com/vijaythapa)**
 
+**Donate by wire transfer:** E-Mail at *donate@vijaythapa.com* for wire transfer details. 
 
 
 ## How to Install and Run this project?
