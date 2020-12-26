@@ -4,6 +4,8 @@ Feel free to make changes based on your requirements.
 
 [Project Demo on YouTube](https://www.youtube.com/watch?v=kArCR96m7uo "Django Student Management System Demo")
 
+I've created this project while learnging Django and followed tutorial series from **SuperCoders**
+
 And if you like this project then ADD a STAR ⭐️  to this project 👆
 
 ## Features of this Project
