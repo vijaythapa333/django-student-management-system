@@ -1,5 +1,5 @@
 asgiref==3.2.10
-Django==3.0.7
+Django==3.1.13
 django-extensions==3.0.2
 graphviz==0.14
 mysql-connector-python==8.0.20
