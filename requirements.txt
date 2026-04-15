@@ -6,6 +6,7 @@ mysql-connector-python==8.0.20
 protobuf==3.12.2
 pydot==1.4.1
 pyparsing==2.4.7
+python-dotenv>=1.0.0
 pytz==2020.1
 six==1.15.0
 sqlparse==0.3.1
