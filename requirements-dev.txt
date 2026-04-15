@@ -1,0 +1,30 @@
+# Production dependencies
+-r requirements.txt
+
+# Environment variables
+python-dotenv==1.0.0
+
+# Code formatting
+black==23.12.1
+
+# Code linting
+flake8==7.0.0
+flake8-bugbear==24.1.17
+
+# Import sorting
+isort==5.13.2
+
+# Testing
+pytest==7.4.4
+pytest-django==4.7.0
+pytest-cov==4.1.0
+
+# Coverage
+coverage==7.4.1
+
+# Type checking (optional)
+mypy==1.8.0
+django-stubs==4.2.7
+
+# Pre-commit hooks
+pre-commit==3.6.0

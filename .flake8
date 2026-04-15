@@ -1,0 +1,24 @@
+[flake8]
+max-line-length = 100
+extend-ignore = E203, E266, E501, W503, F403, F401
+max-complexity = 15
+select = B,C,E,F,W,T4,B9
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    venv,
+    env,
+    .env,
+    build,
+    dist,
+    migrations,
+    static,
+    media,
+    *.pyc,
+    .eggs,
+    *.egg,
+    .tox
+per-file-ignores =
+    __init__.py:F401
+    settings/*.py:F405,F403
