@@ -1,0 +1,24 @@
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | migrations
+)/
+'''
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ['E203', 'W503']
+exclude = ['.git', '__pycache__', 'migrations', '*.pyc', '.venv']
+max-complexity = 10
