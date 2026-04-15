@@ -1,0 +1,6 @@
+2026-04-15 10:07:16 [DEBUG] tests:76 - Test debug message
+2026-04-15 10:07:16 [ERROR] tests:84 - Test exception logged
+Traceback (most recent call last):
+  File "E:\Docker\新建文件夹\student-management-system-doubao\student_management_app\tests.py", line 82, in test_error_logging_works
+    raise ValueError('Test error for logging')
+ValueError: Test error for logging
