@@ -3,7 +3,6 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage #To upload Profile Picture
 from django.urls import reverse
-from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 import json
 
@@ -135,7 +134,6 @@ def staff_feedback_save(request):
 
 
 # WE don't need csrf_token when using Ajax
-@csrf_exempt
 def get_students(request):
     # Getting Values from Ajax POST 'Fetch Student'
     subject_id = request.POST.get("subject")
@@ -161,7 +159,6 @@ def get_students(request):
 
 
 
-@csrf_exempt
 def save_attendance_data(request):
     # Get Values from Staf Take Attendance form via AJAX (JavaScript)
     # Use getlist to access HTML Array/List Input Data
@@ -203,7 +200,6 @@ def staff_update_attendance(request):
     }
     return render(request, "staff_template/update_attendance_template.html", context)
 
-@csrf_exempt
 def get_attendance_dates(request):
     
 
@@ -230,7 +226,6 @@ def get_attendance_dates(request):
     return JsonResponse(json.dumps(list_data), content_type="application/json", safe=False)
 
 
-@csrf_exempt
 def get_attendance_student(request):
     # Getting Values from Ajax POST 'Fetch Student'
     attendance_date = request.POST.get('attendance_date')
@@ -247,7 +242,6 @@ def get_attendance_student(request):
     return JsonResponse(json.dumps(list_data), content_type="application/json", safe=False)
 
 
-@csrf_exempt
 def update_attendance_data(request):
     student_ids = request.POST.get("student_ids")
 
