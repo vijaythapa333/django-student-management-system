@@ -125,6 +125,7 @@
 {% block custom_js %}
 
 <script>
+    $.ajaxSetup({ headers: { "X-CSRFToken": "{{ csrf_token }}" } });
     $(document).ready(function(){
         
 
